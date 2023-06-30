@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:the_mealdb_api/src/models/recipe.dart';
+import 'package:the_mealdb_api/src/models/models.dart';
 
 class RecipeRequestFailure implements Exception {}
 
@@ -39,7 +39,7 @@ class TheMealdbApiClient {
     return Recipe.fromJson(results.first as Map<String, dynamic>);
   }
 
-  Future<List<String>> getCategories() async {
+  Future<List<Category>> getCategories() async {
     final categoryRequest = Uri.https(
       _baseUrl,
       'api/json/v1/1/categories.php'
@@ -54,10 +54,10 @@ class TheMealdbApiClient {
     final categoryJson = jsonDecode(categoryResponse.body) as Map;
 
     var categories = categoryJson['categories'];
-    List<String> results = [];
+    List<Category> results = [];
 
     for (var category in categories) {
-      results.add(category["strCategory"]);
+      results.add(Category.fromJson(category));
     }
 
     return results;

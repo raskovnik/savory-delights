@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:savory_delights/business_logic/cubit/recipe_cubit.dart';
+import 'package:savory_delights/presentation/widgets/widgets.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -28,11 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: ListView.builder(
                           itemCount: state.categories.length,
                           itemBuilder: (context, index) {
-                            return Card(
-                              child: ListTile(
-                                title: Text(state.categories[index])
-                              ),
-                            );
+                            return CategoryWidget(category: state.categories[index]);
                           }
                         ),
                       );

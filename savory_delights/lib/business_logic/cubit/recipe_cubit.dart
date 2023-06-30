@@ -12,7 +12,7 @@ class RecipeCubit extends Cubit<RecipeState> {
 
   Future<void> fetchCategories() async {
     try {
-      final categories = await apiClient.getCategories();
+      final List<Category> categories = await apiClient.getCategories();
       emit(RecipeLoaded(categories));
     } catch (_) {
       emit(RecipeLoadFailed());

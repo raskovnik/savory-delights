@@ -5,7 +5,7 @@ abstract class RecipeState {}
 class RecipeLoading extends RecipeState{}
 
 class RecipeLoaded extends RecipeState{
-  final List<String> categories;
+  final List<Category> categories;
 
   RecipeLoaded(this.categories);
 }
