@@ -1,44 +1,52 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:savory_delights/business_logic/cubit/recipe_cubit.dart';
-import 'package:savory_delights/presentation/widgets/widgets.dart';
+import 'package:savory_delights/presentation/screens/screens.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomePageState extends State<HomePage> {
+  int _selectedIndex = 0;
+  static const List<Widget> _widgetOptions = <Widget>[
+    Home(),
+    CategoryPage(),
+    Text(
+      'Favorites',
+    ),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text("Savory Delights")),
-        body: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Center(child: Text("Categories")),
-              BlocBuilder<RecipeCubit, RecipeState>(
-                  builder: (context, state) {
-                    if (state is RecipeLoading) {
-                      return const CircularProgressIndicator();
-                    } else if (state is RecipeLoaded) {
-                      return Expanded(
-                        child: ListView.builder(
-                          itemCount: state.categories.length,
-                          itemBuilder: (context, index) {
-                            return CategoryWidget(category: state.categories[index]);
-                          }
-                        ),
-                      );
-                    }                
-                    return Container();
-                  },
-                ),
-            ]
-        )
-      );
+      body: Center(child: _widgetOptions.elementAt(_selectedIndex)),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: "Home",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.grid_4x4_rounded),
+            label: "Categories"
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite_border),
+            label: "Favorites"
+          )
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.amber[800],
+        onTap: _onItemTapped,
+      ),
+    );
   }
 }
