@@ -18,4 +18,5 @@ class RecipeCubit extends Cubit<RecipeState> {
       emit(RecipeLoadFailed());
     }
   }
+
 }
