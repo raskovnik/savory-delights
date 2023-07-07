@@ -12,7 +12,10 @@ class RecipeCardCubit extends Cubit<RecipeCardState> {
 
   Future<void> fetchRandomMeal() async {
     try {
-      final Recipe recipe = await apiClient.getRandomMeal();
+      final List<Recipe> recipe = [];
+      for (var i = 0; i <= 2; i++) {
+        recipe.add(await apiClient.getRandomMeal());
+      }
       emit(RecipeCardLoaded(recipe));
     } catch (_) {
       emit(RecipeCardLoadFailed());

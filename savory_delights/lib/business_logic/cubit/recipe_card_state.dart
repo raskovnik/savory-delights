@@ -5,7 +5,7 @@ abstract class RecipeCardState {}
 class RecipeCardLoading extends RecipeCardState {}
 
 class RecipeCardLoaded extends RecipeCardState {
-  final Recipe recipe;
+  final List<Recipe> recipe;
 
   RecipeCardLoaded(this.recipe);
 }

@@ -13,7 +13,7 @@ class Home extends StatelessWidget {
       child: Scaffold(
           body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         const Padding(
-          padding: EdgeInsets.only(left: 16.0, bottom: 8.0, top: 16.0),
+          padding: EdgeInsets.only(left: 16.0, top: 16.0),
           child: Text("Random Picks",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
         ),
@@ -25,12 +25,14 @@ class Home extends StatelessWidget {
             if (state is RecipeCardLoading) {
               return const Center(child: CircularProgressIndicator());
             } else if (state is RecipeCardLoaded) {
-              return ListView(scrollDirection: Axis.horizontal, children: [
-                RecipeCard(recipe: state.recipe),
-                RecipeCard(recipe: state.recipe),
-                RecipeCard(recipe: state.recipe)
-              ]);
-            }
+              return ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: state.recipe.length,
+                itemBuilder: (context, index) {
+                  return RecipeCard(recipe: state.recipe[index]);
+                }
+              ); 
+              }
             return Container();
           }),
         ),
