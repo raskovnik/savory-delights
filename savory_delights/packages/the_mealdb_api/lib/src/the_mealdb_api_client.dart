@@ -86,11 +86,11 @@ class TheMealdbApiClient {
   }
 
   Future<List<Recipe>> loadMeals() async {
-    final List<Category> categories = getCategories() as List<Category>;
+    final List<Category> categories = await getCategories();
     final List<Recipe> allRecipes = [];
 
     for (var category in categories) {
-      allRecipes.addAll(loadMealsByCategory(category.name) as List<Recipe>);
+      allRecipes.addAll(await loadMealsByCategory(category.name));
     }
     return allRecipes;
   }
@@ -98,8 +98,8 @@ class TheMealdbApiClient {
   Future<List<Recipe>> loadMealsByCategory(String category) async {
     final categoryMealsRequest = Uri.https(
       _baseUrl,
-      'api/json/v1/1/random.php',
-      {"c": category}
+      '/api/json/v1/1/filter.php',
+      {'c': category}
     );
 
     final categoryMealsResponse = await _httpClient.get(categoryMealsRequest);
@@ -116,7 +116,6 @@ class TheMealdbApiClient {
     for (var result in results) {
       categoryMeals.add(Recipe.fromJson(result));
     }
-
     return categoryMeals;
   }
 }

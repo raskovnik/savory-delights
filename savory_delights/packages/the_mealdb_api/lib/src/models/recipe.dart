@@ -6,26 +6,29 @@ part 'recipe.g.dart';
 class Recipe {
   @JsonKey(name: 'strMeal')
   final String title;
-  @JsonKey(name: 'strCategory')
-  final String category;
-  @JsonKey(name: 'strArea')
-  final String area;
-  @JsonKey(name: 'strInstructions')
-  final String instructions;
+  @JsonKey(name: 'idMeal')
+  final String id;
+  // @JsonKey(name: 'strCategory')
+  // final String category;
+  // @JsonKey(name: 'strArea')
+  // final String area;
+  // @JsonKey(name: 'strInstructions')
+  // final String instructions;
   @JsonKey(name: 'strMealThumb')
   final String imageURL;
-  @JsonKey(name: 'strYoutube')
-  final String videoURL;
+  // @JsonKey(name: 'strYoutube')
+  // final String videoURL;
   // final List<String> ingredients;
   // final List<String> measures;
 
   Recipe({
     required this.title,
-    required this.category,
-    required this.area,
-    required this.instructions,
+    required this.id,
+    // required this.category ?? "Meh",
+    // required this.area ?? "Meh",
+    // required this.instructions ?? "Meh",
     required this.imageURL,
-    required this.videoURL,
+    // required this.videoURL ?? "Meh",
     // required this.ingredients,
     // required this.measures,
   });

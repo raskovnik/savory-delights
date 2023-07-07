@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:savory_delights/business_logic/cubit/home_cubit.dart';
 import 'package:savory_delights/business_logic/cubit/recipe_card_cubit.dart';
 import 'package:savory_delights/presentation/widgets/widgets.dart';
 
@@ -43,7 +44,31 @@ class Home extends StatelessWidget {
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
           ),
           TextButton(onPressed: () {}, child: const Text("See All"))
-        ])
+        ]),
+        BlocProvider(
+          create: (context) => HomeCubit(),
+          child: BlocBuilder<HomeCubit, HomeState>(
+            builder: (context, state) {
+              if (state is HomeLoading) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (state is HomeLoaded) {
+                return Expanded(
+                  child: ListView.builder(
+                    itemCount: state.meals.length,
+                    itemBuilder: (BuildContext context, int index) { 
+                      return ListTile(
+                        title: Text(state.meals[index].title)
+                      );
+                    },
+                  ),
+                );
+              } else if (state is HomeLoadFailed) {
+                return const Center(child: Text("Failed to load"));
+              }
+              return Container();
+            },
+          )
+        )
       ])),
     );
   }
