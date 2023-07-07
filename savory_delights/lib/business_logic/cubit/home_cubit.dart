@@ -13,10 +13,8 @@ class HomeCubit extends Cubit<HomeState> {
   Future<void> fetchMeals() async {
     try {    
       final List<Recipe> meals = await apiClient.loadMeals();
-      print(meals.length);
       emit(HomeLoaded(meals));
     } catch (e) {
-      print(e.toString());
       emit(HomeLoadFailed(e.toString()));
     }
 

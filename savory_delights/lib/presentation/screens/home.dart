@@ -46,29 +46,31 @@ class Home extends StatelessWidget {
           TextButton(onPressed: () {}, child: const Text("See All"))
         ]),
         BlocProvider(
-          create: (context) => HomeCubit(),
-          child: BlocBuilder<HomeCubit, HomeState>(
-            builder: (context, state) {
-              if (state is HomeLoading) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (state is HomeLoaded) {
-                return Expanded(
-                  child: ListView.builder(
-                    itemCount: state.meals.length,
-                    itemBuilder: (BuildContext context, int index) { 
-                      return ListTile(
-                        title: Text(state.meals[index].title)
-                      );
-                    },
-                  ),
-                );
-              } else if (state is HomeLoadFailed) {
-                return const Center(child: Text("Failed to load"));
-              }
-              return Container();
-            },
-          )
-        )
+            create: (context) => HomeCubit(),
+            child: BlocBuilder<HomeCubit, HomeState>(
+              builder: (context, state) {
+                if (state is HomeLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (state is HomeLoaded) {
+                  return Expanded(
+                    child: GridView.builder(
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2, // Number of columns in the grid
+                        crossAxisSpacing: 10, // Spacing between columns
+                        mainAxisSpacing: 10, // Spacing between rows
+                      ),
+                      itemCount: state.meals.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return RecipeCard(recipe: state.meals[index]);
+                      },
+                    ),
+                  );
+                } else if (state is HomeLoadFailed) {
+                  return const Center(child: Text("Failed to load"));
+                }
+                return Container();
+              },
+            ))
       ])),
     );
   }
