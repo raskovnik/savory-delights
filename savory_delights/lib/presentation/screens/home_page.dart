@@ -10,7 +10,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
-  static const List<Widget> _widgetOptions = <Widget>[
+  static const List<Widget> _widgetOptions = [
     Home(),
     CategoryPage(),
     Text(
@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: _widgetOptions.elementAt(_selectedIndex)),
+      body: _widgetOptions[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         items: const [
           BottomNavigationBarItem(
