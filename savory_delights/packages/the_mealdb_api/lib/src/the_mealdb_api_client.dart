@@ -84,4 +84,39 @@ class TheMealdbApiClient {
 
 
   }
+
+  Future<List<Recipe>> loadMeals() async {
+    final List<Category> categories = getCategories() as List<Category>;
+    final List<Recipe> allRecipes = [];
+
+    for (var category in categories) {
+      allRecipes.addAll(loadMealsByCategory(category.name) as List<Recipe>);
+    }
+    return allRecipes;
+  }
+
+  Future<List<Recipe>> loadMealsByCategory(String category) async {
+    final categoryMealsRequest = Uri.https(
+      _baseUrl,
+      'api/json/v1/1/random.php',
+      {"c": category}
+    );
+
+    final categoryMealsResponse = await _httpClient.get(categoryMealsRequest);
+
+    if (categoryMealsResponse.statusCode != 200) {
+      throw RecipeRequestFailure();
+    }
+
+    final categoryMealsJson = jsonDecode(categoryMealsResponse.body);
+    final results = categoryMealsJson["meals"] as List;
+    if (results.isEmpty) throw FetchRequestFailure();
+
+    List<Recipe> categoryMeals = [];
+    for (var result in results) {
+      categoryMeals.add(Recipe.fromJson(result));
+    }
+
+    return categoryMeals;
+  }
 }
