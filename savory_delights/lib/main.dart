@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:savory_delights/business_logic/cubit/home_cubit.dart';
 import 'package:savory_delights/business_logic/cubit/recipe_card_cubit.dart';
-import 'package:savory_delights/business_logic/cubit/recipe_cubit.dart';
+import 'package:savory_delights/business_logic/cubit/category_cubit.dart';
 import 'package:savory_delights/presentation/screens/screens.dart';
 
 void main() {
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<HomeCubit>(create: (context) => HomeCubit()),
-        BlocProvider<RecipeCubit>(create: (context) => RecipeCubit()),
+        BlocProvider<CategoryCubit>(create: (context) => CategoryCubit()),
         BlocProvider<RecipeCardCubit>(create: (context) => RecipeCardCubit()),
       ],
       child: MaterialApp(

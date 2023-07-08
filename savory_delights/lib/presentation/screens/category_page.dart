@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:savory_delights/business_logic/cubit/recipe_cubit.dart';
+import 'package:savory_delights/business_logic/cubit/category_cubit.dart';
 import 'package:savory_delights/presentation/widgets/widgets.dart';
 
 class CategoryPage extends StatelessWidget {
@@ -16,11 +16,11 @@ class CategoryPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              BlocBuilder<RecipeCubit, RecipeState>(
+              BlocBuilder<CategoryCubit, CategoryState>(
                 builder: (context, state) {
-                  if (state is RecipeLoading) {
+                  if (state is CategoryLoading) {
                     return const Center(child: CircularProgressIndicator());
-                  } else if (state is RecipeLoaded) {
+                  } else if (state is CategoryLoaded) {
                     return Expanded(
                       child: GridView.builder(
                           gridDelegate:
@@ -35,6 +35,8 @@ class CategoryPage extends StatelessWidget {
                                 category: state.categories[index]);
                           }),
                     );
+                  } else if (state is CategoryLoadFailed) {
+                    return const Center(child: Text("Failed to Load Categories"));
                   }
                   return Container();
                 },
