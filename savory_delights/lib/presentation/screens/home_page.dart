@@ -13,9 +13,7 @@ class _HomePageState extends State<HomePage> {
   static const List<Widget> _widgetOptions = [
     Home(),
     CategoryPage(),
-    Text(
-      'Favorites',
-    ),
+    RecipePage(id: "52772")
   ];
 
   void _onItemTapped(int index) {

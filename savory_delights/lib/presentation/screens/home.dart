@@ -36,19 +36,6 @@ class Home extends StatelessWidget {
             return Container();
           }),
         ),
-        // Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        //   const Padding(
-        //     padding: EdgeInsets.only(left: 16.0, bottom: 8.0, top: 16.0),
-        //     child: Text("Categories",
-        //         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-        //   ),
-        //   TextButton(
-        //       onPressed: () {
-        //         Navigator.pushNamed(context, "/categories");
-        //         // Navigator.
-        //       },
-        //       child: const Text("See All"))
-        // ]),
         BlocBuilder<HomeCubit, HomeState>(
           builder: (context, state) {
             if (state is HomeLoading) {

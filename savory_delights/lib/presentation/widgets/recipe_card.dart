@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:savory_delights/presentation/screens/recipe_page.dart';
 import 'package:the_mealdb_api/the_mealdb_api.dart';
 
 class RecipeCard extends StatelessWidget {
@@ -13,7 +14,7 @@ class RecipeCard extends StatelessWidget {
       width: MediaQuery.of(context).size.width * 0.85,
       child: GestureDetector(
         onTap: () {
-          print("Card has been clicked");
+          Navigator.push(context, MaterialPageRoute(builder: (context) => RecipePage(id: recipe.id)));        
         },
         child: Card(
           child: Stack(
