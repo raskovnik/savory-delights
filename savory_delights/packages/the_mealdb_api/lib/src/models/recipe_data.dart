@@ -17,8 +17,8 @@ class RecipeData {
   final String imageURL;
   @JsonKey(name: 'strYoutube')
   final String videoURL;
-  // final List<String> ingredients;
-  // final List<String> measures;
+  late List<String> measures;
+  late List<String> ingredients;
 
   RecipeData({
     required this.title,
@@ -28,11 +28,23 @@ class RecipeData {
     required this.instructions,
     required this.imageURL,
     required this.videoURL,
-    // required this.ingredients,
-    // required this.measures,
-  });
+    List<String>? measures,
+    List<String>? ingredients
+  }) : measures = measures ?? [], ingredients = ingredients ?? [];
 
-  factory RecipeData.fromJson(Map<String, dynamic> json) => _$RecipeDataFromJson(json);
+  factory RecipeData.fromJson(Map<String, dynamic> json) {
+    RecipeData recipe = _$RecipeDataFromJson(json);
+    recipe.ingredients = List<String>.generate(20, (index) {
+      final ingredient = json['strIngredient${index + 1}'];
+      return ingredient != null && ingredient.isNotEmpty ? ingredient : '';
+    });
+    recipe.measures = List<String>.generate(20, (index) {
+      final measure = json['strMeasure${index + 1}'];
+      return measure != null && measure.isNotEmpty ? measure : '';
+    });
+
+    return recipe;
+  }
 
   Map<String, dynamic> toJson() => _$RecipeDataToJson(this);
 }
