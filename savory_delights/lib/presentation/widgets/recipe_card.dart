@@ -14,7 +14,7 @@ class RecipeCard extends StatelessWidget {
       width: MediaQuery.of(context).size.width * 0.85,
       child: GestureDetector(
         onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => RecipePage(id: recipe.id)));        
+          Navigator.push(context, MaterialPageRoute(builder: (context) => RecipePage(recipe: recipe)));        
         },
         child: Card(
           child: Stack(

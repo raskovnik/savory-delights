@@ -34,11 +34,11 @@ class RecipeData {
 
   factory RecipeData.fromJson(Map<String, dynamic> json) {
     RecipeData recipe = _$RecipeDataFromJson(json);
-    recipe.ingredients = List<String>.generate(20, (index) {
+    recipe.ingredients = List<String>.generate(30, (index) {
       final ingredient = json['strIngredient${index + 1}'];
       return ingredient != null && ingredient.isNotEmpty ? ingredient : '';
     });
-    recipe.measures = List<String>.generate(20, (index) {
+    recipe.measures = List<String>.generate(30, (index) {
       final measure = json['strMeasure${index + 1}'];
       return measure != null && measure.isNotEmpty ? measure : '';
     });
