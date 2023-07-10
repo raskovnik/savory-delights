@@ -11,6 +11,10 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+          appBar: AppBar(
+            title: const Center(child: Text("Savory Delights")),
+            backgroundColor: const Color.fromARGB(255, 148, 170, 208)
+            ),
           body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         const Padding(
           padding: EdgeInsets.only(left: 16.0, top: 16.0),
