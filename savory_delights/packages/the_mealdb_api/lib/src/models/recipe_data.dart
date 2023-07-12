@@ -19,7 +19,7 @@ class RecipeData {
   final String videoURL;
   late List<String> measures;
   late List<String> ingredients;
-  final bool isFavorite = false;
+  bool isFavorite = false;
 
   RecipeData({
     required this.title,
