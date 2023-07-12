@@ -10,6 +10,8 @@ class Recipe {
   @JsonKey(name: 'strMealThumb')
   final String imageURL;
 
+  final bool isFavorite = false;
+
   Recipe({
     required this.title,
     required this.id,
