@@ -137,4 +137,22 @@ class TheMealdbApiClient {
 
     return RecipeData.fromJson(result.first);
   }
+
+  Future<Recipe> loadRecipeById(String id) async {
+    final mealRecipeRequest = Uri.https(
+      _baseUrl,
+      '/api/json/v1/1/lookup.php',
+      {'i': id});
+      
+    final mealRecipeResponse = await _httpClient.get(mealRecipeRequest);
+
+    if (mealRecipeResponse.statusCode != 200) throw RecipeRequestFailure();
+
+    final mealRecipeJson = jsonDecode(mealRecipeResponse.body);
+    final result = mealRecipeJson["meals"] as List;
+
+    if (result.isEmpty) throw FetchRequestFailure();
+
+    return Recipe.fromJson(result.first);
+  }
 }

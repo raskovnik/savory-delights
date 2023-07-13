@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:savory_delights/presentation/screens/recipe_page.dart';
 import 'package:the_mealdb_api/the_mealdb_api.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RecipeCard extends StatefulWidget {
   final Recipe recipe;
@@ -12,6 +13,22 @@ class RecipeCard extends StatefulWidget {
 }
 
 class _RecipeCardState extends State<RecipeCard> {
+  List<String> favs = [];
+
+  void addFavorite(String id) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    favs = prefs.getStringList("favorites") ?? [];
+    favs.add(id);
+    prefs.setStringList("favorites", favs);
+  }
+
+  void removeFavorite(String id) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    favs = prefs.getStringList("favorites") ?? [];
+    favs.remove(id);
+    prefs.setStringList("favorites", favs);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -19,7 +36,10 @@ class _RecipeCardState extends State<RecipeCard> {
       width: MediaQuery.of(context).size.width * 0.85,
       child: GestureDetector(
         onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => RecipePage(recipe: widget.recipe)));        
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => RecipePage(recipe: widget.recipe)));
         },
         child: Card(
           child: Stack(
@@ -56,11 +76,18 @@ class _RecipeCardState extends State<RecipeCard> {
                 child: GestureDetector(
                   onTap: () {
                     setState(() {
+                      if (widget.recipe.isFavorite == true)
+                        removeFavorite(widget.recipe.id);
+                      else
+                        addFavorite(widget.recipe.id);
+
                       widget.recipe.isFavorite = !widget.recipe.isFavorite;
                     });
                   },
                   child: Icon(
-                    widget.recipe.isFavorite == false ? Icons.favorite_border : Icons.favorite,
+                    widget.recipe.isFavorite == false
+                        ? Icons.favorite_border
+                        : Icons.favorite,
                     color: Colors.red,
                     size: 24,
                   ),
@@ -73,4 +100,3 @@ class _RecipeCardState extends State<RecipeCard> {
     );
   }
 }
-

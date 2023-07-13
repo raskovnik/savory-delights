@@ -13,7 +13,8 @@ class _HomePageState extends State<HomePage> {
   static const List<Widget> _widgetOptions = [
     Home(),
     CategoryPage(),
-    Center(child: Text("Favorites"))
+    // Center(child: Text("Favorites"))
+    FavoritesPage()
   ];
 
   void _onItemTapped(int index) {
