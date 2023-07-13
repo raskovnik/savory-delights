@@ -20,6 +20,9 @@ class _RecipeCardState extends State<RecipeCard> {
     favs = prefs.getStringList("favorites") ?? [];
     favs.add(id);
     prefs.setStringList("favorites", favs);
+    setState(() {
+      
+    });
   }
 
   void removeFavorite(String id) async {
@@ -27,6 +30,9 @@ class _RecipeCardState extends State<RecipeCard> {
     favs = prefs.getStringList("favorites") ?? [];
     favs.remove(id);
     prefs.setStringList("favorites", favs);
+    setState(() {
+      
+    });
   }
 
   @override
