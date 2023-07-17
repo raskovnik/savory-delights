@@ -24,45 +24,51 @@ class Home extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(16),
           height: MediaQuery.of(context).size.height * 0.25,
-          child: BlocBuilder<RecipeCardCubit, RecipeCardState>(
-              builder: (context, state) {
-            if (state is RecipeCardLoading) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (state is RecipeCardLoaded) {
-              return ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: state.recipe.length,
-                itemBuilder: (context, index) {
-                  return RecipeCard(recipe: state.recipe[index]);
+          child: BlocProvider(
+            create: (context) => RecipeCardCubit(),
+            child: BlocBuilder<RecipeCardCubit, RecipeCardState>(
+                builder: (context, state) {
+              if (state is RecipeCardLoading) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (state is RecipeCardLoaded) {
+                return ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: state.recipe.length,
+                  itemBuilder: (context, index) {
+                    return RecipeCard(recipe: state.recipe[index]);
+                  }
+                ); 
                 }
-              ); 
-              }
-            return Container();
-          }),
+              return Container();
+            }),
+          ),
         ),
-        BlocBuilder<HomeCubit, HomeState>(
-          builder: (context, state) {
-            if (state is HomeLoading) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (state is HomeLoaded) {
-              return Expanded(
-                child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2, // Number of columns in the grid
-                    crossAxisSpacing: 10, // Spacing between columns
-                    mainAxisSpacing: 10, // Spacing between rows
+        BlocProvider(
+          create: (context) => HomeCubit(),
+          child: BlocBuilder<HomeCubit, HomeState>(
+            builder: (context, state) {
+              if (state is HomeLoading) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (state is HomeLoaded) {
+                return Expanded(
+                  child: GridView.builder(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2, // Number of columns in the grid
+                      crossAxisSpacing: 10, // Spacing between columns
+                      mainAxisSpacing: 10, // Spacing between rows
+                    ),
+                    itemCount: state.meals.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return RecipeCard(recipe: state.meals[index]);
+                    },
                   ),
-                  itemCount: state.meals.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return RecipeCard(recipe: state.meals[index]);
-                  },
-                ),
-              );
-            } else if (state is HomeLoadFailed) {
-              return const Center(child: Text("Failed to load"));
-            }
-            return Container();
-          },
+                );
+              } else if (state is HomeLoadFailed) {
+                return const Center(child: Text("Failed to load"));
+              }
+              return Container();
+            },
+          ),
         )
       ])),
     );
