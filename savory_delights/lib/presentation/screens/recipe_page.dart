@@ -37,22 +37,28 @@ class RecipePage extends StatelessWidget {
                         Center(child: Text("Hold On Chef!"))
                       ]);
                 } else if (state is RecipeLoaded) {
-                  return TabBarView(children: [
-                    ListView.builder(
-                      itemCount: state.data.ingredients.length,
-                      itemBuilder: (context, index) {
-                        return state.data.ingredients[index].isNotEmpty &&
-                                state.data.measures[index].isNotEmpty
-                            ? Text(
-                                "${state.data.ingredients[index]} - ${state.data.measures[index]}",
-                                style: const TextStyle(height: 2.5))
-                            : const Text("");
-                      },
-                    ),
-                    SingleChildScrollView(
-                        child: Text(state.data.instructions,
-                            style: const TextStyle(height: 2.5)))
-                  ]);
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TabBarView(children: [
+                      ListView.builder(
+                        itemCount: state.data.ingredients.length,
+                        itemBuilder: (context, index) {
+                          return state.data.ingredients[index].isNotEmpty &&
+                                  state.data.measures[index].isNotEmpty
+                              ? Text(
+                                  "${state.data.ingredients[index]} - ${state.data.measures[index]}",
+                                  style: const TextStyle(height: 2.5))
+                              : const Text("");
+                        },
+                      ),
+                      SingleChildScrollView(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(state.data.instructions,
+                                style: const TextStyle(height: 2.5)),
+                          ))
+                    ]),
+                  );
                   // return Center(child: Text(state.data.instructions));
                 } else if (state is RecipeLoadFailed) {
                   return Center(
