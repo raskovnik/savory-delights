@@ -16,6 +16,7 @@ class HomeCubit extends Cubit<HomeState> {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       List<String> favs = prefs.getStringList("favorites") ?? [];
       final List<Recipe> meals = await apiClient.loadMeals();
+      if (meals.isNotEmpty) meals.shuffle();
       if (favs.isNotEmpty) {
         for (Recipe meal in meals) {
           meal.isFavorite = favs.contains(meal.id);
